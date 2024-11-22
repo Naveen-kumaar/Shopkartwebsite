@@ -26,17 +26,19 @@ ShopKart | Collections
                     <h4 class="mb-3">Categories</h4>
                     <hr style="border-color:#b8bfc2;">
                 </div>
-            
-                <div class="col-md-4 col-lg-3">
-                    <div class="card my-3">
-                        <img src="" class="card-image-top"alt="Categories">
-                        <div class="card-body">
-                            <h5 class="card-title text-primary">Product Name</h5>
-                            <p class="card-text">HTML stands  </p>
-                            <a href=""class="btn btn-primary btn-sm">View Details</a>
+        
+                {% for item in category %}
+                    <div class="col-md-4 col-lg-3">
+                        <div class="card my-3">
+                            <img src="{{% item.image.url %}}" class="card-image-top"alt="Categories">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">{{ item.name }}</h5>
+                                <p class="card-text">{{ item.description }}</p>
+                                <a href=""class="btn btn-primary btn-sm">View Details</a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </section>
