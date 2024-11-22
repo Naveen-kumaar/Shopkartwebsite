@@ -1,12 +1,10 @@
+
 .content{
-    margin-top: 100px;
+    margin-top: 70px;
 }
 .carousel-item img{
     object-fit: cover;
     object-position: top;
     height: 60vh;
     overflow: hidden;
-}
-h1{
-    color:blue;
 }
