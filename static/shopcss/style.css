@@ -8,3 +8,14 @@
     height: 60vh;
     overflow: hidden;
 }
+.old_price {
+    font-weight: bold;
+    color:red;
+    margin: 3px;
+}
+.new_price {
+    font-weight: bold;
+    background-color: green;
+    margin: 3px;
+    border-radius: 5px;
+}

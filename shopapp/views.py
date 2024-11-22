@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from . models import *
+from django.contrib import messages
 
 # Create your views here.
 def home(request):
@@ -12,3 +13,13 @@ def Register(request):
 def Collections(request):
     category =Category.objects.filter(status=0)
     return render(request,'shoptemp/collections.html',{"category":category})
+
+def CollectionView(request,name):
+    if(Category.objects.filter(name=name,status=0)):
+        products = Product.objects.filter(category__name=name)
+        return render(request,'Products/productsindex.html',{"products":products})
+    else:
+        messages.warning(request,"NO Such Category Found")
+        return redirect('collections')
+
+    
