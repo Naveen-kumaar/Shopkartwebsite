@@ -1,6 +1,6 @@
 {% extends "layout/main.html" %}
 {%block title%}
-ShopKart | Collections view
+ShopKart | {{category | upper}}
 {%endblock%}
 
 
@@ -10,7 +10,7 @@ ShopKart | Collections view
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h4 class="mb-3">{{category}} Products</h4>
+                <h4 class="mb-3">{{category | upper}} PRODUCTS</h4>
                 <hr style="border-color:#b8bfc2">
             </div>
             {% for item in products %}
@@ -24,7 +24,7 @@ ShopKart | Collections view
                             <span class="float-start old_price"><s>Rs.{{ item.original_price | stringformat:'d' }}</s></span>
                             <span class="float-end new_price">Rs.{{ item.selling_price | stringformat:'d'}}</span>
                         </p>
-                        <a href="#"class="btn btn-primary btn-sm mt-4">View Details</a>
+                        <a href="{% url 'ProductDetails' category item.name %}"class="btn btn-primary btn-sm mt-4">View Details</a>
                     </div>
                 </div>
             </div>

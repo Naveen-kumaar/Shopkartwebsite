@@ -1,10 +1,12 @@
 from django.shortcuts import render,redirect
 from . models import *
 from django.contrib import messages
+from django.shortcuts import HttpResponse
 
 # Create your views here.
 def home(request):
-    return render(request,'shoptemp/index.html')
+    products =Product.objects.filter(trending=1)
+    return render(request,'shoptemp/index.html',{"products":products})
 
 def Register(request):
     return render(request,'shoptemp/register.html')
@@ -23,3 +25,18 @@ def CollectionView(request,name):
         return redirect('collections')
 
     
+def ProductDetails(request,cname,pname):
+    if(Category.objects.filter(name= cname,status=0)):
+        if(Product.objects.filter(name= pname,status=0)):
+            products = Product.objects.filter(name = pname,status=0).first()
+            return render(request,"Products/ProductDetail.html",{"products":products})
+        else:
+            messages.error(request,"NO Such Product Found")
+            return redirect('collections')
+    else:
+        messages.error(request,"NO Such Category Found")
+        return redirect('collections')
+        
+            
+
+

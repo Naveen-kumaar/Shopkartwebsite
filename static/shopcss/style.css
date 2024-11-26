@@ -22,3 +22,21 @@
 a {
     text-decoration: none;
 }
+.pic-box {
+
+    position: relative;
+}
+.hot {
+    background-color: orangered;
+    color: white;
+    font-weight: bold;
+    width: 50px;
+    text-align: center;
+    display: inline-block;
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+    top:0px;
+    right: 20px;
+    z-index: 10;
+}

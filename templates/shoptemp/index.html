@@ -12,8 +12,26 @@ ShopKart | Online Shopping
 <div class="container content">
     <div class="row">
         <div class="col-12">
-            <h1>Online shopping</h1>
-        </div>
+            <h3 class="mb-3">Latest Offers</h3>
+            <hr style="border-color:#b8bfc2;">
+
+        </div>    
+            {% for item in products %}
+            <div class="col-md-4 col-lg-3">
+                <div class="card my-3">
+                    <img src="{{item.product_image.url}}" class="card-image-top"alt="Categories">
+
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">{{ item.name }}</h5>
+                        <p class="card-text">
+                            <span class="float-start old_price"><s>Rs.{{ item.original_price | stringformat:'d' }}</s></span>
+                            <span class="float-end new_price">Rs.{{ item.selling_price | stringformat:'d'}}</span>
+                        </p>
+                        <a href="{% url 'ProductDetails' item.category.name item.name %}"class="btn btn-primary btn-sm mt-4">View Details</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
