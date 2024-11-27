@@ -3,6 +3,7 @@ from . models import *
 from django.contrib import messages
 from shopapp.form import CustomUserForm
 from django.shortcuts import HttpResponse
+from django.contrib.auth import authenticate,login,logout
 
 # Create your views here.
 def home(request):
@@ -11,7 +12,35 @@ def home(request):
 
 def Register(request):
     form = CustomUserForm()
+    if request.method == 'POST':
+        form = CustomUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"Registration Success you can Login Now ...")
+            return redirect('/login')
     return render(request,'shoptemp/register.html',{"form":form})
+
+def loginPage(request):
+    if request.method == 'POST':
+        name = request.POST.get('username')
+        pwd = request.POST.get('password')
+        user = authenticate(request,username=name,password=pwd)
+        if user is not None:
+            login(request,user)
+            messages.success(request,"Login successfully")
+            return redirect("/")
+        else:
+            messages.error(request,"Invalid user name or password")
+            return redirect("login/")
+
+    return render (request,'shoptemp/login.html')
+
+
+def logoutPage(request):
+    if request.user.is_authenticate:
+        logout(request)
+        messages.success(request,"Logout Successfully")
+    return redirect("/")
 
 
 def Collections(request):

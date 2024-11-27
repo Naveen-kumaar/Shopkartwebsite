@@ -10,34 +10,48 @@ ShopKart | Register
         <div class="col-12">
             <h4 class="mb-3"> Register</h4>
             <hr style="border-color:#b8bfc2;">
+            {% include 'include/message.html'%}
+
         </div>
     </div>
     <section class="py-4 my-3">
         <div class="container">
             <div class="col-6">
-                <form method="post" action="">
+                <form method="post" action="" >
                      {% csrf_token %}
                      <div class="mb-4">
                         <label for="" class="form-label">User Name</label>
                         {{form.username}}
+                        {% if form.errors.username %} 
+                        <label class="text-danger">{{form.errors.username}}</label>
+                        {% endif%}
                      </div>
                      <div class="mb-4">
                         <label for="" class="form-label">Email</label>
                         {{form.email}}
+                        {%  if form.errors.email %} 
+                        <label class="text-danger">{{form.errors.e}}</label>
+                        {% endif%}
                      </div>
                      <div class="mb-4">
                         <label for="" class="form-label">Password</label>
                         {{form.password1}}
+                        {% if form.errors.password1 %} 
+                        <label class="text-danger">{{form.errors.password1}}</label>
+                        {% endif%}
                      </div>
                      <div class="mb-4">
                         <label for="" class="form-label">Confirm Password</label>
                         {{form.password2}}
+                        {% if form.errors.password2 %} 
+                        <label class="text-danger">{{form.errors.password2}}</label>
+                        {% endif%}
                      </div>
                      <button type="submit" class="btn btn-primary">Register</button>
                      <button type="reset" class="btn btn-danger">Clear</button>
 
                 </form>
-                <p class="my-3">Already User ? <a href="#">Login Now</a></p>
+                <p class="my-3">Already User ? <a href="{% url 'login'%}">Login Now</a></p>
             </div>
         </div>
     </section>
