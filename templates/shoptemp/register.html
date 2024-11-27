@@ -8,8 +8,38 @@ ShopKart | Register
 <div class="container content">
     <div class="row">
         <div class="col-12">
-            <h1>Register</h1>
+            <h4 class="mb-3"> Register</h4>
+            <hr style="border-color:#b8bfc2;">
         </div>
     </div>
+    <section class="py-4 my-3">
+        <div class="container">
+            <div class="col-6">
+                <form method="post" action="">
+                     {% csrf_token %}
+                     <div class="mb-4">
+                        <label for="" class="form-label">User Name</label>
+                        {{form.username}}
+                     </div>
+                     <div class="mb-4">
+                        <label for="" class="form-label">Email</label>
+                        {{form.email}}
+                     </div>
+                     <div class="mb-4">
+                        <label for="" class="form-label">Password</label>
+                        {{form.password1}}
+                     </div>
+                     <div class="mb-4">
+                        <label for="" class="form-label">Confirm Password</label>
+                        {{form.password2}}
+                     </div>
+                     <button type="submit" class="btn btn-primary">Register</button>
+                     <button type="reset" class="btn btn-danger">Clear</button>
+
+                </form>
+                <p class="my-3">Already User ? <a href="#">Login Now</a></p>
+            </div>
+        </div>
+    </section>
 </div>
 {% endblock %}

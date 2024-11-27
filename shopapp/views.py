@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from . models import *
 from django.contrib import messages
+from shopapp.form import CustomUserForm
 from django.shortcuts import HttpResponse
 
 # Create your views here.
@@ -9,7 +10,8 @@ def home(request):
     return render(request,'shoptemp/index.html',{"products":products})
 
 def Register(request):
-    return render(request,'shoptemp/register.html')
+    form = CustomUserForm()
+    return render(request,'shoptemp/register.html',{"form":form})
 
 
 def Collections(request):
