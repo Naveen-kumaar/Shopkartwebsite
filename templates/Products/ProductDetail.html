@@ -37,7 +37,7 @@ ShopKart | {{products | upper}}
                 <div class="my-3">
                     {% if products.quantity > 0 %}
                     <input type="hidden" value="{{products.id}}"id="pid">
-                    {% csrf_token %}
+                    
                     <p>
                         <div class="input-group" style="width:150px">
                             <button class="input-group-text bg-success text-light"id="btnminus"><i class="fa fa-minus"></i></button>
@@ -63,7 +63,7 @@ ShopKart | {{products | upper}}
         const btnMinus = document.getElementById("btnminus");
         const txtQty = document.getElementById("txtqty");
         const pid = document.getElementById("pid");
-        const tkn = document.querySelector('[name="csrfmiddlewaretoken"]').value;
+        /*const tkn = document.querySelector('[name="csrfmiddlewaretoken"]').value;*/
         const btnCart = document.getElementById('btnCart');
 
         btnPlus.addEventListener("click",function() {
@@ -93,12 +93,30 @@ ShopKart | {{products | upper}}
 
             if(qty>0){
                 let postobj = {
-                    product_qty: qty,
-                    pid: pid.value,
-                    token: tkn
+                    'product_qty': qty,
+                    'pid': pid.value
+                    
                 }
                 console.log(postobj)
-            }else{
+                fetch("/addtocart",{
+                    method :'POST',
+                    credentails:'same-origin',
+                    headers:{
+                        'Accept':'application/json',
+                        'X-Requested-Width':'XMLHttpRequest',
+                        'X-CSRFToken':'{{ csrf_token }}',
+                    },
+                    body: JSON.stringify(postobj)
+                }).then(response => {
+                    return response.json();
+                }).then(data =>{
+                    //console.log(data)
+                    alert(data['status'])
+                })
+
+
+            }
+            else{
                 alert("please Enter the quantity");
             }
         })

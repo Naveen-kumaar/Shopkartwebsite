@@ -9,6 +9,6 @@ urlpatterns = [
     path('collections',views.Collections,name='collections'),
     path('collections/<str:name>',views.CollectionView,name='collections'),
     path('collections/<str:cname>/<str:pname>',views.ProductDetails,name='ProductDetails'),
-    path('addtocrat',views.AddtoCart,name="addtocart")
+    path('addtocart',views.AddtoCart,name="addtocart")
     
 ]

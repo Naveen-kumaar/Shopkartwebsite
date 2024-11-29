@@ -4,6 +4,8 @@ from django.contrib import messages
 from shopapp.form import CustomUserForm
 from django.shortcuts import HttpResponse
 from django.contrib.auth import authenticate,login,logout
+from django.http import JsonResponse
+import json
 
 # Create your views here.
 def home(request):
@@ -76,4 +78,24 @@ def ProductDetails(request,cname,pname):
 
 
 def AddtoCart(request):
-    pass
+    if request.headers.get('X-Requested-Width')=='XMLHttpRequest':
+        if request.user.is_authenticated:
+            data = json.load(request)
+            product_qty=data['product_qty']
+            product_id=data['pid']
+            print(request.user.id)
+            product_status =Product.objects.get(id=product_id)
+            
+            if product_status:
+                if Cart.objects.filter(user=request.user,product_id=product_id):
+                    return JsonResponse({'status':'Product Already in Cart'},status=200)
+                else:
+                    if product_status.quantity >= product_qty:
+                        Cart.objects.create(user=request.user,product_id=product_id,product_qty=product_qty)
+                        return JsonResponse({'status':'Product Added to Cart'},status=200)
+                    else:
+                        return JsonResponse({'status':'Product Stock Not available'},status=200)
+        else:
+         return JsonResponse({'status':'Login to Add Cart'}, status=200)
+    else:
+     return JsonResponse({'satuts':'Invalid Access'},status =200)
