@@ -21,23 +21,27 @@ def Register(request):
     return render(request,'shoptemp/register.html',{"form":form})
 
 def loginPage(request):
-    if request.method == 'POST':
-        name = request.POST.get('username')
-        pwd = request.POST.get('password')
-        user = authenticate(request,username=name,password=pwd)
-        if user is not None:
-            login(request,user)
-            messages.success(request,"Login successfully")
-            return redirect("/")
-        else:
-            messages.error(request,"Invalid user name or password")
-            return redirect("login/")
+    if request.user.is_authenticated:
+        return redirect("/")
+    else:
 
-    return render (request,'shoptemp/login.html')
+        if request.method == 'POST':
+            name = request.POST.get('username')
+            pwd = request.POST.get('password')
+            user = authenticate(request,username=name,password=pwd)
+            if user is not None:
+                login(request,user)
+                messages.success(request,"Login successfully")
+                return redirect("/")
+            else:
+                messages.error(request,"Invalid user name or password")
+                return redirect("login/")
+
+        return render (request,'shoptemp/login.html')
 
 
 def logoutPage(request):
-    if request.user.is_authenticate:
+    if request.user.is_authenticated:
         logout(request)
         messages.success(request,"Logout Successfully")
     return redirect("/")
@@ -71,3 +75,5 @@ def ProductDetails(request,cname,pname):
             
 
 
+def AddtoCart(request):
+    pass
