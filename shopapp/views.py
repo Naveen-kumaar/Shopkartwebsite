@@ -26,7 +26,6 @@ def loginPage(request):
     if request.user.is_authenticated:
         return redirect("/")
     else:
-
         if request.method == 'POST':
             name = request.POST.get('username')
             pwd = request.POST.get('password')
@@ -74,7 +73,36 @@ def ProductDetails(request,cname,pname):
         messages.error(request,"NO Such Category Found")
         return redirect('collections')
         
-            
+def CartPage(request):
+    if request.user.is_authenticated:
+        cart = Cart.objects.filter(user=request.user)
+        return render(request,"shoptemp/cart.html",{'cart':cart})
+    else:
+        return redirect("/")         
+
+def removeCart(request,cid):
+    cartitem = Cart.objects.get(id=cid)
+    cartitem.delete()
+    return redirect("/cartpage")    
+    
+
+def AddFav(request):    
+    if request.headers.get('X-Requested-Width')=='XMLHttpRequest':
+        if request.user.is_authenticated:
+            data = json.load(request)
+            product_id=data['pid']
+            print(request.user.id)
+            product_status =Product.objects.get(id=product_id)
+            if product_status:
+                if Favourite.objects.filter(user=request.user,product_id=product_id):
+                    return JsonResponse({'status':'Product Already in Favourite'}, status=200)
+                else:
+                    Favourite.objects.create(user=request.user,product_id=product_id)
+                    return JsonResponse({'status':'Product Added to Favourite'}, status=200)
+        else:
+         return JsonResponse({'status':'Login to Add Favourite'}, status=200)
+    else:
+     return JsonResponse({'satuts':'Invalid Access'},status =200)
 
 
 def AddtoCart(request):
@@ -99,3 +127,16 @@ def AddtoCart(request):
          return JsonResponse({'status':'Login to Add Cart'}, status=200)
     else:
      return JsonResponse({'satuts':'Invalid Access'},status =200)
+    
+   
+def FavViewPage(request):
+    if request.user.is_authenticated:
+        fav = Favourite.objects.filter(user=request.user)
+        return render(request,"shoptemp/favviewpage.html",{'fav':fav})
+    else:
+        return redirect("/")   
+    
+def RemoveFavPage(request,fid):
+    favitem = Favourite.objects.get(id=fid)
+    favitem.delete()
+    return redirect("/favviewpage")

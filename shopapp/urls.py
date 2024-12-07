@@ -9,6 +9,11 @@ urlpatterns = [
     path('collections',views.Collections,name='collections'),
     path('collections/<str:name>',views.CollectionView,name='collections'),
     path('collections/<str:cname>/<str:pname>',views.ProductDetails,name='ProductDetails'),
-    path('addtocart',views.AddtoCart,name="addtocart")
+    path('addtocart',views.AddtoCart,name="addtocart"),
+    path('cartpage',views.CartPage,name="cartpage"),
+    path('fav',views.AddFav,name="fav"),
+    path('favviewpage',views.FavViewPage,name="favviewpage"),
+    path('removefavpage/<str:fid>',views.RemoveFavPage,name="removefavpage"),
+    path('removeCart/<str:cid>',views.removeCart,name="removeCart")
     
 ]
